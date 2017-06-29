@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-catalog="baltimore_neighborhoods" match-name="address"/>
+  <table-filter match-catalog="baltimore_neighborhoods" match-name="area"/>
+  <table-filter match-catalog="baltimore_neighborhoods" match-name="council_district"/>
+  <table-filter match-catalog="baltimore_neighborhoods" match-name="grocery_store"/>
+  <table-filter match-catalog="baltimore_neighborhoods" match-name="grocery_type"/>
+  <table-filter match-catalog="baltimore_neighborhoods" match-name="library"/>
+  <table-filter match-catalog="baltimore_neighborhoods" match-name="location"/>
+  <table-filter match-catalog="baltimore_neighborhoods" match-name="neighborhood"/>
+  <table-filter match-catalog="baltimore_neighborhoods" match-name="police_district"/>
+  <table-filter match-catalog="baltimore_neighborhoods" match-name="vacant_building"/>
+  <table-filter match-catalog="baltimore_neighborhoods" match-name="zip_code"/>
+</hibernate-reverse-engineering>
