@@ -2,6 +2,6 @@ package baltimoredata.model.projection;
 
 public interface LimitedNeighborhood {
     public Integer getId();
-    public LimitedArea getArea();
+    public AreaName getArea();
     public String getName();
 }
