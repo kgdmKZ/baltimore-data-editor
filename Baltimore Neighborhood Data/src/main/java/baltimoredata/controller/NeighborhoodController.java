@@ -18,10 +18,24 @@ import baltimoredata.repository.NeighborhoodRepository;
 
 @Controller 
 @RequestMapping(path="/neighborhoods") 
-public class MainController {
-	@Autowired // get generated repository
+public class NeighborhoodController {
+	@Autowired
 	private NeighborhoodRepository neighborhoodRepository;
-    	
+    
+	@GetMapping(path={"/", ""})
+	public @ResponseBody List<LimitedNeighborhood> getNeighborhoods(Pageable pageReq) {
+		return neighborhoodRepository.listAll(pageReq);
+	}
+	
+	@GetMapping(path="/{id}")
+	public ResponseEntity<LimitedNeighborhood> getNeighborhoodById(@PathVariable Integer id) {
+		Optional<LimitedNeighborhood> result = neighborhoodRepository.findById(id);
+		if (!result.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		return ResponseEntity.ok(result.get());
+	}
+	
 	@GetMapping(path="/name/{name}")
 	public ResponseEntity<LimitedNeighborhood> getNeighborhoodByName(@PathVariable String name) {
 		Optional<LimitedNeighborhood> result = neighborhoodRepository.findByName(name);
