@@ -15,8 +15,14 @@ public interface NeighborhoodRepository extends PagingAndSortingRepository<Neigh
 	
 	LimitedNeighborhood findById(Integer id);
 	LimitedNeighborhood findByName(String name);
-    
+	
+	@Query(value="SELECT n FROM Neighborhood n WHERE n.name = :name")
+	Neighborhood findByNameFull(String name);
+	
     Integer countByArea_Csa2010(String csa2010);
     List<LimitedNeighborhood> findByArea_Csa2010(String csa2010, Pageable pageable);
+    
+    Long removeById(Integer id);
+    Long removeByName(String name);
     
 }
