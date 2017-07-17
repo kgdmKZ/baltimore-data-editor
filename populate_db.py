@@ -84,13 +84,16 @@ def createAreaTable(demographics):
       csa2010 VARCHAR(255) UNIQUE NOT NULL, 
       male10 INT unsigned NOT NULL,
       female10 INT unsigned NOT NULL,
+      hhsize10 DECIMAL(2,1) unsigned NOT NULL,
+      racdiv10 DECIMAL(4,1) unsigned NOT NULL,
       '''
     
-    skip = ['csa2010', 'male10', 'tpop10', 'female10']
+    skip = ['csa2010', 'male10', 'tpop10', 'female10', 'hhsize10', 
+      'racdiv10']
     
     for key in demographics[0]:
         if key not in skip:
-            demo_table += key + " DECIMAL(6,3) NOT NULL,"
+            demo_table += key + " DECIMAL(4,3) unsigned NOT NULL,"
     
     demo_table += '''
       PRIMARY KEY(id))'''
