@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import baltimoredata.model.Area;
 import baltimoredata.model.Neighborhood;
-import baltimoredata.model.projection.LimitedNeighborhood;
 import baltimoredata.repository.AreaRepository;
 import baltimoredata.repository.NeighborhoodRepository;
+import baltimoredata.view.NeighborhoodViews;
 
 @RestController 
 @RequestMapping(path="/neighborhoods") 
@@ -33,7 +35,8 @@ public class NeighborhoodController {
 	private AreaRepository areaRepository;
 	
 	@GetMapping(path="")
-	public List<LimitedNeighborhood> getNeighborhoods(Pageable pageReq) {
+	@JsonView(NeighborhoodViews.Limited.class)
+	public List<Neighborhood> getNeighborhoods(Pageable pageReq) {
 		return neighborhoodRepository.listAll(pageReq);
 	}
 	
@@ -43,7 +46,7 @@ public class NeighborhoodController {
 		return count.intValue();
 	}
 	
-	private ResponseEntity<LimitedNeighborhood> neighborhoodIfExists(LimitedNeighborhood res) {
+	private ResponseEntity<Neighborhood> neighborhoodIfExists(Neighborhood res) {
 		if (res == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
@@ -51,14 +54,16 @@ public class NeighborhoodController {
 	}
 	
 	@GetMapping(path="/{id}")
-	public ResponseEntity<LimitedNeighborhood> getNeighborhoodById(@PathVariable Integer id) {
-		LimitedNeighborhood result = neighborhoodRepository.findById(id);
+	@JsonView(NeighborhoodViews.Limited.class)
+	public ResponseEntity<Neighborhood> getNeighborhoodById(@PathVariable Integer id) {
+		Neighborhood result = neighborhoodRepository.findOne(id);
 		return neighborhoodIfExists(result);
 	}
 	
 	@GetMapping(path="/name/{name}")
-	public ResponseEntity<LimitedNeighborhood> getNeighborhoodByName(@PathVariable String name) {
-		LimitedNeighborhood result = neighborhoodRepository.findByName(name);
+	@JsonView(NeighborhoodViews.Limited.class)
+	public ResponseEntity<Neighborhood> getNeighborhoodByName(@PathVariable String name) {
+		Neighborhood result = neighborhoodRepository.findByName(name);
 		return neighborhoodIfExists(result);
 	}
 	
@@ -77,11 +82,12 @@ public class NeighborhoodController {
 	}
 	
 	@GetMapping(path="/area/{area}")
-    public ResponseEntity<List<LimitedNeighborhood>> getNeighborhoodsByArea(@PathVariable String area, Pageable pageReq) {
+	@JsonView(NeighborhoodViews.Minimal.class)
+    public ResponseEntity<List<Neighborhood>> getNeighborhoodsByArea(@PathVariable String area, Pageable pageReq) {
 		if (!areaExists(area)) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
-		List<LimitedNeighborhood> neighborhoods = neighborhoodRepository.findByArea_Csa2010(area, pageReq);
+		List<Neighborhood> neighborhoods = neighborhoodRepository.findByArea_Csa2010(area, pageReq);
 		return ResponseEntity.ok(neighborhoods);
 	}
 	
@@ -95,7 +101,7 @@ public class NeighborhoodController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No area exists with the provided name.");
 		}
 		
-		LimitedNeighborhood old = neighborhoodRepository.findByName(name);
+		Neighborhood old = neighborhoodRepository.findByName(name);
 		
 		if (old != null) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("A neighborhood with the provided name already exists.");
@@ -137,7 +143,7 @@ public class NeighborhoodController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No area exists with the provided name.");
 		}
 		
-		Neighborhood old = neighborhoodRepository.findByNameFull(name);
+		Neighborhood old = neighborhoodRepository.findByName(name);
 		if (old == null) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("No neighborhood with the provided name already exists.");
 		}
