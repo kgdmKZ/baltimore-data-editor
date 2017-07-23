@@ -14,8 +14,8 @@ public interface NeighborhoodRepository extends PagingAndSortingRepository<Neigh
 	
 	Neighborhood findByName(String name);
 	
-    Integer countByArea_Csa2010(String csa2010);
-    List<Neighborhood> findByArea_Csa2010(String csa2010, Pageable pageable);
+    Integer countByArea_Id(Integer id);
+    List<Neighborhood> findByArea_Id(Integer id, Pageable pageable);
     
     Long removeById(Integer id);
     Long removeByName(String name);

@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -86,9 +87,8 @@ public class Neighborhood  {
 		this.name = name;
 	}
     
-	@Null
+	@Size(max=0)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "neighborhood")
-	@JsonView(NeighborhoodViews.Full.class)
 	public Set<Address> getAddresses() {
 		return this.addresses;
 	}

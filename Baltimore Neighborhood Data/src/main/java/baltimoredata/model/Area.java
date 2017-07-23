@@ -27,7 +27,6 @@ import org.hibernate.validator.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import baltimoredata.view.AreaViews;
-import baltimoredata.view.NeighborhoodViews;
 
 
 /**
@@ -490,7 +489,6 @@ public class Area {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "area")
 	@Size(max=0)
-	@JsonView(AreaViews.Full.class)
 	public Set<Neighborhood> getNeighborhoods() {
 		return this.neighborhoods;
 	}

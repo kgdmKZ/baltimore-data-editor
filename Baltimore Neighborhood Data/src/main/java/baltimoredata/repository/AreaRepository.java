@@ -5,10 +5,8 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 
 import baltimoredata.model.Area;
-import baltimoredata.model.projection.LimitedArea;
 
 public interface AreaRepository extends CrudRepository<Area, Integer> {
 	Area findByCsa2010(String csa2010);
@@ -20,8 +18,9 @@ public interface AreaRepository extends CrudRepository<Area, Integer> {
 			+ " a.hh25inc14 AS hh25inc14, a.p2more10 AS p2more10, a.age6510 AS age6510, a.hhsize10 AS hhsize10, a.age2410 "
 			+ "AS age2410, a.hh75inc14 AS hh75inc14, a.age510 AS age510 FROM Area a"
 			)
-	List<LimitedArea> listAll(Pageable pageable);
+	List<Area> listAll(Pageable pageable);
 	
-	LimitedArea findById(Integer id);
+	Long removeById(Integer id);
+	Long removeByCsa2010(String csa2010);
 	
 }
