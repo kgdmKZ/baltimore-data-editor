@@ -1,8 +1,7 @@
 package baltimoredata.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,9 +10,11 @@ import baltimoredata.exception.ConflictException;
 import baltimoredata.exception.ResourceNotFoundException;
 import baltimoredata.model.Area;
 import baltimoredata.repository.AreaRepository;
+import baltimoredata.service.AreaService;
 
 @Service
-public class AreaServiceImpl {
+@Transactional
+public class AreaServiceImpl implements AreaService {
     
 	@Autowired
 	AreaRepository areaRepository;
@@ -24,8 +25,8 @@ public class AreaServiceImpl {
 	}
 	
 	@Transactional(readOnly=true)
-	public List<Area> getAreas(Pageable pageReq) {
-		return areaRepository.listAll(pageReq);
+	public Page<Area> getAreas(Pageable pageReq) {
+		return areaRepository.findAll(pageReq);
 	}
 	
 	@Transactional(readOnly=true)
@@ -38,7 +39,6 @@ public class AreaServiceImpl {
 		return areaRepository.findByCsa2010(csa2010);
 	}
 	
-	@Transactional
 	public Area addArea(Area a) {
 		String csa2010 = a.getCsa2010();
 		Area res = areaRepository.findByCsa2010(csa2010);
@@ -62,7 +62,6 @@ public class AreaServiceImpl {
 		areaRepository.save(modified);
 	}
 	
-	@Transactional
 	public void modifyAreaById(Integer id, Area modified) {
 		Area existing = areaRepository.findOne(id);
 		if (existing == null) {
@@ -70,8 +69,7 @@ public class AreaServiceImpl {
 		}
 		modifyArea(modified, existing);
 	}
-	
-	@Transactional 
+	 
 	public void modifyAreaByCsa2010(String csa2010, Area modified) {
 		Area existing = areaRepository.findByCsa2010(csa2010);
 		if (existing == null) {
@@ -80,12 +78,10 @@ public class AreaServiceImpl {
 		modifyArea(modified, existing);
 	}
 	
-	@Transactional
 	public Long deleteAreaById(Integer id) {
 		return areaRepository.removeById(id);
 	}
 	
-	@Transactional 
 	public Long deleteAreaByCsa2010(String csa2010) {
 		return areaRepository.removeByCsa2010(csa2010);
 	}

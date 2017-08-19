@@ -1,12 +1,12 @@
 package baltimoredata.controller;
 
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +36,7 @@ public class AreaController {
 	
 	@GetMapping(path="")
 	@JsonView(AreaViews.Limited.class)
-	public List<Area> getAreas(Pageable pageReq) {
+	public Page<Area> getAreas(Pageable pageReq) {
 		return areaService.getAreas(pageReq);
 	}
 	
@@ -81,12 +81,8 @@ public class AreaController {
 	@PutMapping(path={"/{id}", "/csa2010/{csa2010}"})
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void modifyArea(@PathVariable Optional<Integer> id, @PathVariable Optional<String> csa2010,
-			@RequestBody @Valid Area a) {
-		Area existing = null;
-		boolean hasId = id.isPresent();
-		
-		if (hasId) {
-			hasId = true;
+			@RequestBody @Valid Area a) {		
+		if (id.isPresent()) {
 			areaService.modifyAreaById(id.get(), a);
 		}
 		else if (csa2010.isPresent()) {
@@ -94,13 +90,6 @@ public class AreaController {
 		}
 		else {
 			throw new BadRequestException("An id or CSA name for the area to modify is required, but neither was provided.");
-		}
-		
-		if (existing == null) {
-			if (hasId) {
-			    throw new ResourceNotFoundException("area", "id", id.get().toString());
-			}
-			throw new ResourceNotFoundException("area", "csa2010", csa2010.get());
 		}
 	}
 	

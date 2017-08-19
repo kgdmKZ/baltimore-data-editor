@@ -1,14 +1,13 @@
 package baltimoredata.service;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import baltimoredata.model.Area;
 
 public interface AreaService {
     public Long getAreaCount();
-    public List<Area> getAreas(Pageable pageReq);
+    public Page<Area> getAreas(Pageable pageReq);
     public Area getAreaById(Integer id);
     public Area getAreaByCsa2010(String csa2010);
     public Area addArea(Area a);
