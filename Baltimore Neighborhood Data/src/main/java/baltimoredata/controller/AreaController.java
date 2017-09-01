@@ -57,7 +57,7 @@ public class AreaController {
 			result = areaService.getAreaByCsa2010(csa2010.get());
 		}
 		else {
-			throw new BadRequestException("An id or csa name is required, but neither was provided.");
+			throw new BadRequestException("An id or CSA name is required, but neither was provided.");
 		}
 		
 		if (result == null) {
