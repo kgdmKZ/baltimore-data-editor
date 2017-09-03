@@ -20,7 +20,7 @@ import baltimoredata.repository.PoliceDistrictRepository;
 import baltimoredata.service.AddressService;
 
 @Service
-@Transactional
+@Transactional(readOnly=true)
 public class AddressServiceImpl implements AddressService {
     @Autowired
     NeighborhoodRepository neighborhoodRepository;
@@ -143,6 +143,7 @@ public class AddressServiceImpl implements AddressService {
 		return addressRepository.findByNeighborhood_NameAndStreetAddress(neighborhood, streetAddress);
 	};
 	
+	@Transactional
 	public Address addAddress(Address a) {
 		String policeDistrictName = a.getPoliceDistrict().getDistrictName();
 		PoliceDistrict p = policeRepository.findByDistrictName(policeDistrictName);
@@ -210,6 +211,7 @@ public class AddressServiceImpl implements AddressService {
 		addressRepository.save(existing);
 	}
 	
+	@Transactional
 	public void modifyAddressById(Integer id, Address a) {
 		Address existing = addressRepository.findOne(id);
     	if (existing == null) {
@@ -218,6 +220,7 @@ public class AddressServiceImpl implements AddressService {
     	modifyAddress(a, existing);
 	}
 	
+	@Transactional
 	public void modifyAddressByNeighborhoodAndStreetAddress(String neighborhood, String streetAddress, Address a) {
 		Address existing = addressRepository.findByNeighborhood_NameAndStreetAddress(neighborhood, streetAddress);
     	if (existing == null) {
@@ -226,10 +229,12 @@ public class AddressServiceImpl implements AddressService {
     	modifyAddress(a, existing);
 	}
 	
+	@Transactional
 	public Long deleteAddressById(Integer id) {
 		return addressRepository.removeById(id);
 	};
 	
+	@Transactional
 	public Long deleteAddressByNeighborhoodAndStreetAddress(String neighborhood, String streetAddress) {
 		return addressRepository.removeByNeighborhood_NameAndStreetAddress(neighborhood, streetAddress);
 	};
