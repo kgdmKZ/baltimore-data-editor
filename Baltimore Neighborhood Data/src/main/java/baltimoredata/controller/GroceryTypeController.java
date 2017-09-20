@@ -26,7 +26,7 @@ import baltimoredata.exception.BadRequestException;
 import baltimoredata.exception.ResourceNotFoundException;
 import baltimoredata.model.GroceryType;
 import baltimoredata.service.GroceryTypeService;
-import baltimoredata.view.GroceryStoreViews;
+import baltimoredata.view.POIViews;
 
 @RestController
 @RequestMapping(path="/grocerytypes")
@@ -35,7 +35,7 @@ public class GroceryTypeController {
     private GroceryTypeService groceryTypeService;
     
     @GetMapping(path="")
-    @JsonView(GroceryStoreViews.Limited.class)
+    @JsonView(POIViews.Limited.class)
     public Page<GroceryType> getGroceryTypes(Pageable pageReq) {
     	return groceryTypeService.getGroceryTypes(pageReq);
     }
@@ -47,7 +47,7 @@ public class GroceryTypeController {
     
     
     @GetMapping(path={"/{id}", "/name/{name}"})
-    @JsonView(GroceryStoreViews.Limited.class)
+    @JsonView(POIViews.Limited.class)
     public GroceryType getGroceryType(@PathVariable Optional<Integer> id, @PathVariable Optional<String> name) {
     	GroceryType result = null;
     	boolean hasId = id.isPresent();
@@ -72,7 +72,7 @@ public class GroceryTypeController {
     }
     
     @PostMapping(path="")
-    @JsonView(GroceryStoreViews.Limited.class)
+    @JsonView(POIViews.Limited.class)
     public ResponseEntity<GroceryType> addGroceryType(@RequestBody @Valid GroceryType g) {
     	GroceryType saved = groceryTypeService.addGroceryType(g);
     	URI location = URI.create("/grocerytypes" + saved.getId());

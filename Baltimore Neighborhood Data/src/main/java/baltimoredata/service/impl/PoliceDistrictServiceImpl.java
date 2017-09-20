@@ -10,10 +10,11 @@ import baltimoredata.exception.ConflictException;
 import baltimoredata.exception.ResourceNotFoundException;
 import baltimoredata.model.PoliceDistrict;
 import baltimoredata.repository.PoliceDistrictRepository;
+import baltimoredata.service.PoliceDistrictService;
 
 @Service
 @Transactional
-public class PoliceDistrictServiceImpl {
+public class PoliceDistrictServiceImpl implements PoliceDistrictService {
     @Autowired
     PoliceDistrictRepository policeRepository;
     

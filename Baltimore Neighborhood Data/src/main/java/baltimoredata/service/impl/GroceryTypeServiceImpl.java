@@ -10,10 +10,11 @@ import baltimoredata.exception.ConflictException;
 import baltimoredata.exception.ResourceNotFoundException;
 import baltimoredata.model.GroceryType;
 import baltimoredata.repository.GroceryTypeRepository;
+import baltimoredata.service.GroceryTypeService;
 
 @Service
 @Transactional
-public class GroceryTypeServiceImpl {
+public class GroceryTypeServiceImpl implements GroceryTypeService {
     @Autowired
     GroceryTypeRepository groceryTypeRepository;
     
