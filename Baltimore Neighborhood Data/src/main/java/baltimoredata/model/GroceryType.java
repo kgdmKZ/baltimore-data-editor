@@ -48,7 +48,7 @@ public class GroceryType {
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	@Null
-	@JsonView(POIViews.Limited.class)
+	@JsonView(POIViews.Minimal.class)
 	public Integer getId() {
 		return this.id;
 	}
@@ -59,7 +59,7 @@ public class GroceryType {
 
 	@Column(name = "name", unique = true, nullable = false)
 	@NotBlank
-	@JsonView(POIViews.Limited.class)
+	@JsonView(POIViews.Minimal.class)
 	public String getName() {
 		return this.name;
 	}

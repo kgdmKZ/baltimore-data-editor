@@ -51,7 +51,7 @@ public class ZipCode {
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	@Null
-	@JsonView(POIViews.Limited.class)
+	@JsonView(POIViews.Minimal.class)
 	public Integer getId() {
 		return this.id;
 	}
@@ -64,7 +64,7 @@ public class ZipCode {
 	@NotNull
 	@Min(0)
 	@Max(99999)
-	@JsonView(POIViews.Limited.class)
+	@JsonView(POIViews.Minimal.class)
 	public int getZip() {
 		return this.zip;
 	}

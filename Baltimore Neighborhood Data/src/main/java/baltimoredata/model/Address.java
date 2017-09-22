@@ -63,7 +63,7 @@ public class Address {
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	@Null
-	@JsonView(AddressViews.Minimal.class)
+	@JsonView(AddressViews.POIMinimal.class)
 	public Integer getId() {
 		return this.id;
 	}
@@ -109,7 +109,7 @@ public class Address {
 	}
 
 	@Column(name = "street_address")
-	@JsonView(AddressViews.Minimal.class)
+	@JsonView(AddressViews.POIMinimal.class)
 	public String getStreetAddress() {
 		return this.streetAddress;
 	}
