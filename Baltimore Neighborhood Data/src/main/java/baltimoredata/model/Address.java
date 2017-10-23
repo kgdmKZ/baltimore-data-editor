@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -119,7 +120,7 @@ public class Address {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
-	@Null
+	@Size(max=0)
 	public Set<Library> getLibraries() {
 		return this.libraries;
 	}
@@ -129,7 +130,7 @@ public class Address {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
-	@Null
+	@Size(max=0)
 	public Set<GroceryStore> getGroceryStores() {
 		return this.groceryStores;
 	}
@@ -139,7 +140,7 @@ public class Address {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "address")
-	@Null
+	@Size(max=0)
 	public Set<Location> getLocations() {
 		return this.locations;
 	}

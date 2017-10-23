@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 
+import com.bedatadriven.jackson.datatype.jts.JtsModule;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.Module;
@@ -36,5 +37,10 @@ public class JsonSerializerConfig {
                  gen.writeEndObject();
             }
         });
+    }
+	// Added this bean so that Points in Location entities would be serialized properly
+	@Bean
+	public JtsModule jtsModule() {
+	    return new JtsModule();
     }
 }

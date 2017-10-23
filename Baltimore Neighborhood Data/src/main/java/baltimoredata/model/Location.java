@@ -2,7 +2,6 @@ package baltimoredata.model;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +18,9 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import com.vividsolutions.jts.geom.Point;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -35,7 +37,7 @@ public class Location {
 
 	private Integer id;
 	private Address address;
-	private Serializable coords;
+	private Point coords;
 	private String blockNumber;
 	private String lotNumber;
 	private Set<VacantBuilding> vacantBuildings = new HashSet<VacantBuilding>(0);
@@ -43,14 +45,14 @@ public class Location {
 	public Location() {
 	}
 
-	public Location(Address address, Serializable coords, String blockNumber, String lotNumber) {
+	public Location(Address address, Point coords, String blockNumber, String lotNumber) {
 		this.address = address;
 		this.coords = coords;
 		this.blockNumber = blockNumber;
 		this.lotNumber = lotNumber;
 	}
 
-	public Location(Address address, Serializable coords, String blockNumber, String lotNumber, Set<VacantBuilding> vacantBuildings) {
+	public Location(Address address, Point coords, String blockNumber, String lotNumber, Set<VacantBuilding> vacantBuildings) {
 		this.address = address;
 		this.coords = coords;
 		this.blockNumber = blockNumber;
@@ -83,14 +85,14 @@ public class Location {
 		this.address = address;
 	}
 
-	@Column(name = "coords", unique = true, nullable = false)
+	@Column(name = "coords", unique = true, nullable = false, columnDefinition = "POINT")
 	@NotNull
 	@JsonView(POIViews.Minimal.class)
-	public Serializable getCoords() {
+	public Point getCoords() {
 		return this.coords;
 	}
 
-	public void setCoords(Serializable coords) {
+	public void setCoords(Point coords) {
 		this.coords = coords;
 	}
 
@@ -119,7 +121,7 @@ public class Location {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "location")
-	@Null
+	@Size(max=0)
 	public Set<VacantBuilding> getVacantBuildings() {
 		return this.vacantBuildings;
 	}

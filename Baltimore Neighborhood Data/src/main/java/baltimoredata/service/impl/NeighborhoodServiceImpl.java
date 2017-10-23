@@ -41,38 +41,6 @@ public class NeighborhoodServiceImpl implements NeighborhoodService {
     	return neighborhoodRepository.findByName(name);
     }
     
-    public Integer getNeighborhoodCountByAreaId(Integer id) {
-    	Area a = areaRepository.findOne(id);
-    	if (a == null) {
-    		throw new ResourceNotFoundException("area", "id", id.toString());
-    	}
-    	return neighborhoodRepository.countByArea_Id(id);
-    }
-    
-    public Integer getNeighborhoodCountByAreaCsa2010(String csa2010) {
-    	Area a = areaRepository.findByCsa2010(csa2010);
-    	if (a == null) {
-    		throw new ResourceNotFoundException("area", "csa2010", csa2010);
-    	}
-    	return neighborhoodRepository.countByArea_Id(a.getId());
-    }
-    
-    public Page<Neighborhood> getNeighborhoodsByAreaId(Integer id, Pageable pageReq) {
-    	Area a = areaRepository.findOne(id);
-    	if (a == null) {
-    		throw new ResourceNotFoundException("area", "id", id.toString());
-    	}
-    	return neighborhoodRepository.findByArea_Id(id, pageReq);
-    }
-    
-    public Page<Neighborhood> getNeighborhoodsByAreaCsa2010(String csa2010, Pageable pageReq) {
-    	Area a = areaRepository.findByCsa2010(csa2010);
-    	if (a == null) {
-    		throw new ResourceNotFoundException("area", "csa2010", csa2010);
-    	}
-    	return neighborhoodRepository.findByArea_Id(a.getId(), pageReq);
-    }
-    
     public Neighborhood addNeighborhood(Neighborhood n) {
 		String area = n.getArea().getCsa2010();
 		Area a = areaRepository.findByCsa2010(area);

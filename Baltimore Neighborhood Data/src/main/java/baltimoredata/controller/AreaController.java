@@ -1,12 +1,15 @@
 package baltimoredata.controller;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +28,10 @@ import com.fasterxml.jackson.annotation.JsonView;
 import baltimoredata.exception.BadRequestException;
 import baltimoredata.exception.ResourceNotFoundException;
 import baltimoredata.model.Area;
+import baltimoredata.model.Neighborhood;
 import baltimoredata.service.AreaService;
 import baltimoredata.view.AreaViews;
+import baltimoredata.view.NeighborhoodViews;
 
 @RestController
 @RequestMapping(path="/areas")
@@ -117,4 +122,19 @@ public class AreaController {
 		}
 	}
 	
+	@GetMapping(path={"/{id}/neighborhoods", "/csa2010/{csa2010}/neighborhoods"})
+	@JsonView(NeighborhoodViews.Limited.class)
+	public Page<Neighborhood> getNeighborhoodsByArea(@PathVariable Optional<Integer> id, @PathVariable Optional<String> csa2010, 
+			Pageable pageReq) {
+		Area a = this.getArea(id, csa2010);
+		List<Neighborhood> neighborhoodList = new ArrayList<Neighborhood>(a.getNeighborhoods());
+		Page<Neighborhood> neighborhoods = new PageImpl<>(neighborhoodList, pageReq, neighborhoodList.size());
+		return neighborhoods;
+	}
+	
+	@GetMapping(path={"/{id}/neighborhoods/count", "/csa2010/{csa2010}/neighborhoods/count"})
+	public Integer getNeighborhoodCountByArea(@PathVariable Optional<Integer> id, @PathVariable Optional<String> csa2010) {
+		Area a = this.getArea(id, csa2010);
+		return a.getNeighborhoods().size();
+	}
 }

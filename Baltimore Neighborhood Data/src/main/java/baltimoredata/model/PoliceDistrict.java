@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -69,7 +70,7 @@ public class PoliceDistrict {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "policeDistrict")
-	@Null
+	@Size(max=0)
 	public Set<Address> getAddresses() {
 		return this.addresses;
 	}

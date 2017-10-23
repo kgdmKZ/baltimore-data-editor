@@ -45,35 +45,6 @@ public class NeighborhoodController {
 		return neighborhoodService.getNeighborhoods(pageReq);
 	}
 	
-	
-	@GetMapping(path={"/area/csa2010/{csa2010}/count", "/area/{id}/count"})
-    public Integer getNeighborhoodCountByArea(@PathVariable Optional<Integer> id, 
-		@PathVariable Optional<String> csa2010) {
-		
-	    if (id.isPresent()) {
-	    	return neighborhoodService.getNeighborhoodCountByAreaId(id.get());
-	    }
-	    if (csa2010.isPresent()) {
-	    	return neighborhoodService.getNeighborhoodCountByAreaCsa2010(csa2010.get());
-	    }
-	    throw new BadRequestException("An area id or CSA name is required, but neither was provided.");
-    }
-    
-	@GetMapping(path={"/area/csa2010/{csa2010}", "/area/{id}"})
-    @JsonView(NeighborhoodViews.Minimal.class)
-    public Page<Neighborhood> getNeighborhoodsByArea(@PathVariable Optional<Integer> id, 
-    		@PathVariable Optional<String> csa2010, Pageable pageReq) {
-
-	    if (id.isPresent()) {
-	    	return neighborhoodService.getNeighborhoodsByAreaId(id.get(), pageReq);
-	    }
-	    if (csa2010.isPresent()) {
-	    	return neighborhoodService.getNeighborhoodsByAreaCsa2010(csa2010.get(), pageReq);
-	    }
-	    throw new BadRequestException("An area id or CSA name is required, but neither was provided.");
-    }
-
-	
 	@GetMapping(path={"/{id}", "/name/{name}"})
 	@JsonView(NeighborhoodViews.Limited.class)
 	public Neighborhood getNeighborhood(@PathVariable Optional<Integer> id, @PathVariable Optional<String> name) {

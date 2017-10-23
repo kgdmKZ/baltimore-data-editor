@@ -17,6 +17,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -74,7 +75,7 @@ public class ZipCode {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "zipCode")
-	@Null
+	@Size(max=0)
 	public Set<Library> getLibraries() {
 		return this.libraries;
 	}
@@ -84,7 +85,7 @@ public class ZipCode {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "zipCode")
-	@Null
+	@Size(max=0)
 	public Set<GroceryStore> getGroceryStores() {
 		return this.groceryStores;
 	}

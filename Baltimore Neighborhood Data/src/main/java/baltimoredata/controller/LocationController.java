@@ -46,6 +46,8 @@ public class LocationController {
 		return locationService.getLocationCount().intValue();
 	}
     
+    
+    
     @GetMapping(path={"/{id}", "/address/{addressId}", "/address/neighborhood/{neighborhoodId}/streetaddress/{streetAddress}", 
     		"/address/neighborhood/name/{name}/streetaddress/{streetAddress}", "/coords/{coords}", 
     		"/blocknumber/{blockNumber}/lotnumber/{lotNumber}"})

@@ -16,6 +16,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -70,7 +71,7 @@ public class CouncilDistrict {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "councilDistrict")
-	@Null
+	@Size(max=0)
 	public Set<Address> getAddresses() {
 		return this.addresses;
 	}
